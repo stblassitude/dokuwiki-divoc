@@ -24,7 +24,16 @@ $showSidebar = $hasSidebar && ($ACT=='show');
     <?php tpl_includeFile('meta.html') ?>
 </head>
 
-<body>
+<?php
+    function namespace_to_class($class, $ns) {
+        return $class . " ns-".$ns;
+    }
+    $nspath = explode(':', $ID);
+    $page = array_pop($nspath);
+    $class = array_reduce($nspath, 'namespace_to_class',
+                          "page-".$page);
+?>
+<body class="<?php echo $class ?>">
     <div id="dokuwiki__site"><div id="dokuwiki__top" class="site <?php echo tpl_classes(); ?> <?php
         echo ($showSidebar) ? 'showSidebar' : ''; ?> <?php echo ($hasSidebar) ? 'hasSidebar' : ''; ?>">
 
