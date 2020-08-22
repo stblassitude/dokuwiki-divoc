@@ -19,8 +19,20 @@ if (!defined('DOKU_INC')) die();
 
         <h1><?php
             // get logo either out of the template images folder or data/media folder
+            $searchlist = array(':wiki:logo.svg', ':wiki:logo.png', ':logo.png', 'images/logo.png');
+            $candidates = array('logo.svg', 'logo.png');
+            $nspath = explode(':', $ID);
+            for ($i = count($nspath)-1; $i > 0; $i--) {
+                $logos = array();
+                foreach ($candidates as $c) {
+                    array_push($logos, ":" . implode(":", array_slice($nspath, 0, $i)) . ":" . $nspath[$i-1] . "-" .$c);
+                    array_push($logos, ":" . implode(":", array_slice($nspath, 0, $i)) . ":" . $c);
+                }
+                $searchlist = array_merge($logos, $searchlist);
+                //array_unshift($searchlist, $logos);
+            }
             $logoSize = array();
-            $logo = tpl_getMediaFile(array(':wiki:logo.png', ':logo.png', 'images/logo.png'), false, $logoSize);
+            $logo = tpl_getMediaFile($searchlist, false, $logoSize);
 
             // display logo and wiki title in a link to the home page
             tpl_link(
@@ -29,6 +41,7 @@ if (!defined('DOKU_INC')) die();
                 'accesskey="h" title="[H]"'
             );
         ?></h1>
+<!-- searchlist = <?= implode(", ", $searchlist) ?> -->
         <?php if ($conf['tagline']): ?>
             <p class="claim"><?php echo $conf['tagline']; ?></p>
         <?php endif ?>
