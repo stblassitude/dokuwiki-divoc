@@ -1,7 +1,7 @@
-base     dokuwiki
+base     dokuwiki-divoc
 author   Anika Henke
 email    anika@selfthinker.org
 date     2015-07-26
-name     DokuWiki Template
-desc     DokuWiki's default template since 2012
+name     DokuWiki plus DiVOC
+desc     DokuWiki plus DiVOC customizations
 url      http://www.dokuwiki.org/template:dokuwiki
